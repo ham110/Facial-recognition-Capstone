@@ -11,12 +11,12 @@ import tensorflow as tf
 from fr_utils import *
 from inception_blocks_v2 import *
 #import win32com.client as wincl
+import pickle
+PICKLE_OBJ = False
 
 PADDING = 50
 ready_to_detect_identity = True
 #windows10_voice_interface = wincl.Dispatch("SAPI.SpVoice")
-
-FRmodel = faceRecoModel(input_shape=(3, 96, 96))
 
 def triplet_loss(y_true, y_pred, alpha = 0.3):
     """
@@ -45,8 +45,16 @@ def triplet_loss(y_true, y_pred, alpha = 0.3):
     
     return loss
 
-FRmodel.compile(optimizer = 'adam', loss = triplet_loss, metrics = ['accuracy'])
-load_weights_from_FaceNet(FRmodel)
+from keras.models import load_model
+if(PICKLE_OBJ):
+    FRmodel = faceRecoModel(input_shape=(3, 96, 96))
+    FRmodel.compile(optimizer='adam', loss=triplet_loss, metrics=['accuracy'])
+    load_weights_from_FaceNet(FRmodel)
+    FRmodel.save_weights("model_weights.h5")
+    FRmodel.save('my_model.h5')
+else:
+    FRmodel = load_model('my_model.h5', custom_objects={ 'triplet_loss': triplet_loss })
+
 
 def prepare_database():
     database = {}
@@ -171,6 +179,9 @@ def who_is_it(image, database, model):
         return None
     else:
         print('IDENTIFIED AS ' + str(identity))
+        #FINGERPRINT MODULE
+
+        #Prompt user fingerprint authentication
         return str(identity)
 
 def welcome_users(identities):
@@ -191,9 +202,22 @@ def welcome_users(identities):
     # Allow the program to start detecting identities again
     ready_to_detect_identity = True
 
-if __name__ == "__main__":
+if(PICKLE_OBJ):
     database = prepare_database()
+    with open('database.obj', 'wb') as fp:
+        pickle.dump(database, fp)
+else:
+    with open('database.obj', 'rb') as pickle_file:
+        database = pickle.load(pickle_file)
+
+if __name__ == "__main__":
+    # print('starting')
+    # import time
+    # start = time.time()
+    # database = prepare_database()
+    # print(time.time() - start)
     webcam_face_recognizer(database)
+    # print(time.time() - start)
 
 # ### References:
 # 
