@@ -7,7 +7,6 @@ Copyright (C) 2015 Bastian Raschke <bastian.raschke@posteo.de>
 All rights reserved.
 
 """
-#modified by Christopher Booth
 
 import time
 from pyfingerprint.pyfingerprint import PyFingerprint

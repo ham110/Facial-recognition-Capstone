@@ -7,7 +7,6 @@ Copyright (C) 2015 Bastian Raschke <bastian.raschke@posteo.de>
 All rights reserved.
 
 """
-#Modified by Christopher Booth
 import hashlib
 from pyfingerprint.pyfingerprint import PyFingerprint
 import RPi.GPIO as GPIO

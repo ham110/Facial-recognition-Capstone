@@ -18,7 +18,7 @@ face_img = 0
 img_index = 0
 
 def setup(img_index):
-  os.mkdir('/Users/hamza/PycharmProjects/faceRecognition/data/hamza')
+  os.mkdir('..//data/person1')
   while True:
     ret, img = cap.read()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -35,7 +35,7 @@ def setup(img_index):
       print ("Face is detected")
       #cv2.imshow('img', face_img)
       #collect 10 training images
-      cv2.imwrite("../data/hamza/" + str(img_index) + ".jpg", face_img)
+      cv2.imwrite("../data/peron1/" + str(img_index) + ".jpg", face_img)
       img_index += 1
       if(img_index % 50 == 0):
         print('img_index == ' + str(img_index))
@@ -45,7 +45,7 @@ def setup(img_index):
     if k == 27:
       break
   #Extrapolate images
-  '''  base_folder = '../data/hamza/'
+  '''  base_folder = '../data/person1/'
   index = 10
   img1 = cv2.imread(base_folder + '0.jpg')
   img2 = cv2.imread(base_folder + '1.jpg')
