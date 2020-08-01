@@ -44,7 +44,7 @@ def setup(img_index):
     k = cv2.waitKey(1) & 0xFF == ord('q')
     if k == 27:
       break
-  #Extrapolate images
+  #Extrapolate images for faster training
   '''  base_folder = '../data/person1/'
   index = 10
   img1 = cv2.imread(base_folder + '0.jpg')
@@ -79,8 +79,6 @@ def setup(img_index):
     cv2.imwrite(base_folder + str(index) + '.jpg', img10)
     index += 1'''
   #Train model and bring the model in workspace
-  #os.system("python3 retrain.py --image_dir ../data")
-
   print('Training model...!')
   process = subprocess.Popen('python3 retrain.py --image_dir ../data', shell=True, stdout=subprocess.PIPE)
   process.wait()
